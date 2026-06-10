@@ -50,20 +50,20 @@ def hitung_mendel(disease_id, status_p1, status_p2):
 
     elif pola == "XR":
         if status_p1 == "carrier" and status_p2 == "unaffected":
-            return {"anak_laki_affected": 25.0, "anak_perempuan_carrier": 25.0,
-                    "anak_laki_normal": 25.0, "anak_perempuan_normal": 25.0}
+            return {"affected_male": 25.0, "carrier_female": 25.0,
+                    "normal_male": 25.0, "normal_female": 25.0}
         elif status_p1 == "unaffected" and status_p2 == "affected":
-            return {"anak_laki_affected": 0.0, "anak_perempuan_carrier": 50.0,
-                    "anak_laki_normal": 50.0, "anak_perempuan_normal": 0.0}
+            return {"affected_male": 0.0, "carrier_female": 50.0,
+                    "normal_male": 50.0, "normal_female": 0.0}
         else:
-            return {"anak_laki_affected": 0.0, "anak_perempuan_carrier": 0.0,
-                    "anak_laki_normal": 50.0, "anak_perempuan_normal": 50.0}
+            return {"affected_male": 0.0, "carrier_female": 0.0,
+                    "normal_male": 50.0, "normal_female": 50.0}
 
     elif pola == "AD":
         if status_p1 == "affected" or status_p2 == "affected":
-            return {"risiko_tinggi": 50.0, "risiko_rendah": 50.0}
+            return {"high_risk": 50.0, "low_risk": 50.0}
         else:
-            return {"risiko_tinggi": 10.0, "risiko_rendah": 90.0}
+            return {"high_risk": 10.0, "low_risks": 90.0}
 
 @app.route("/predict", methods=["POST"])
 def predict():
