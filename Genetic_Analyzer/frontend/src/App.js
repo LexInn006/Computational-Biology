@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts";
 
-const API = "http://localhost:5000";
+const API = "https://computational-biology-production.up.railway.app";
 
 const FITUR_SLIDER = {
   Age: { label: "Age (years)", min: 10, max: 69, step: 1, default: 35 },
