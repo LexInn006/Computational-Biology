@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 
 const API = "http://localhost:5000";
 
 const FITUR_SLIDER = {
-  Age: { label: "Umur (tahun)", min: 10, max: 69, step: 1, default: 35 },
+  Age: { label: "Age (years)", min: 10, max: 69, step: 1, default: 35 },
   Hemoglobin: { label: "Hemoglobin (g/dL)", min: 5, max: 18, step: 0.1, default: 12 },
   Fetal_Hemoglobin: { label: "Fetal Hemoglobin (%)", min: 0, max: 30, step: 0.1, default: 1.5 },
   RDW_CV: { label: "RDW-CV (%)", min: 10, max: 30, step: 0.1, default: 14 },
@@ -18,17 +18,17 @@ const FITUR_SLIDER = {
 const FITUR_TOMBOL = {
   Gender: {
     label: "Gender",
-    options: [{ label: "Perempuan", value: 0 }, { label: "Laki-laki", value: 1 }],
+    options: [{ label: "Female", value: 0 }, { label: "Male", value: 1 }],
     default: 0,
   },
   Family_History: {
-    label: "Riwayat Keluarga",
-    options: [{ label: "Tidak Ada", value: 0 }, { label: "Ada", value: 1 }],
+    label: "Family History",
+    options: [{ label: "None", value: 0 }, { label: "Yes", value: 1 }],
     default: 0,
   },
   p53_Mutation: {
     label: "p53 Mutation",
-    options: [{ label: "Tidak Ada", value: 0 }, { label: "Ada", value: 1 }],
+    options: [{ label: "None", value: 0 }, { label: "Present", value: 1 }],
     default: 0,
   },
 };
@@ -42,9 +42,9 @@ const WARNA = {
 };
 
 const STATUS_STYLE = {
-  affected:   { bg: "#FCEBEB", color: "#791F1F", text: "Affected (Terkena)" },
-  carrier:    { bg: "#FAEEDA", color: "#633806", text: "Carrier (Pembawa)" },
-  unaffected: { bg: "#EAF3DE", color: "#27500A", text: "Unaffected (Sehat)" },
+  affected:   { bg: "#FCEBEB", color: "#791F1F", text: "Affected" },
+  carrier:    { bg: "#FAEEDA", color: "#633806", text: "Carrier" },
+  unaffected: { bg: "#EAF3DE", color: "#27500A", text: "Unaffected" },
 };
 
 const defaultFitur = {
@@ -185,16 +185,16 @@ function HasilPanel({ hasil }) {
             <p style={{ fontSize: 22, fontWeight: 700, color: warna, margin: "0 0 6px" }}>{hasil.penyakit}</p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
               <StatusBadge status={hasil.status_p1} />
-              <span style={{ fontSize: 12, color: "#378ADD" }}>Keyakinan: {hasil.confidence}%</span>
+              <span style={{ fontSize: 12, color: "#378ADD" }}>Confidence: {hasil.confidence}%</span>
             </div>
           </div>
         </div>
         <div style={s.inheritBox}>
           <span style={{ fontSize: 12, color: "#185FA5" }}>
-            Pola pewarisan: <strong style={{ color: "#0C447C" }}>{hasil.pola_pewarisan}</strong>
+            Inheritance pattern: <strong style={{ color: "#0C447C" }}>{hasil.pola_pewarisan}</strong>
           </span>
         </div>
-        <p style={{ fontSize: 13, fontWeight: 600, color: "#0C447C", margin: "0 0 10px" }}>Risiko pewarisan ke anak</p>
+        <p style={{ fontSize: 13, fontWeight: 600, color: "#0C447C", margin: "0 0 10px" }}>Inheritance risk to child</p>
         {Object.entries(hasil.risiko_anak).map(([label, pct]) => (
           <div key={label} style={{ marginBottom: 10 }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -210,7 +210,7 @@ function HasilPanel({ hasil }) {
 
       {/* Kartu chart */}
       <div style={s.card}>
-        <div style={s.cardTitle}>Probabilitas semua penyakit</div>
+        <div style={s.cardTitle}>All disease probabilities</div>
         <ResponsiveContainer width="100%" height={175}>
           <BarChart data={chartData} layout="vertical" margin={{ left: 8, right: 32 }}>
             <XAxis type="number" domain={[0, 100]} tickFormatter={v => `${v}%`} tick={{ fontSize: 10, fill: "#378ADD" }} />
@@ -227,14 +227,14 @@ function HasilPanel({ hasil }) {
 
       {/* Kartu penjelasan — di dalam HasilPanel, hanya render saat hasil ada */}
       <div style={s.card}>
-        <div style={s.cardTitle}>Mengapa diprediksi demikian?</div>
+        <div style={s.cardTitle}>Why this prediction?</div>
         <div style={{ background: "#E6F1FB", borderRadius: 8, padding: "12px 14px", marginBottom: 14 }}>
           <p style={{ fontSize: 13, color: "#0C447C", margin: 0, lineHeight: 1.7 }}>
             {hasil.penjelasan}
           </p>
         </div>
         <p style={{ fontSize: 12, fontWeight: 600, color: "#378ADD", margin: "0 0 10px" }}>
-          Faktor klinis paling berpengaruh:
+           Most influential clinical factors:
         </p>
         {hasil.top_factors.map((f, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
@@ -245,7 +245,7 @@ function HasilPanel({ hasil }) {
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
                 <span style={{ fontSize: 12, color: "#0C447C", fontWeight: 600 }}>{f.label}</span>
                 <span style={{ fontSize: 11, color: "#378ADD" }}>
-                  Nilai: <strong style={{ color: "#0C447C" }}>{f.nilai_pasien}</strong> · Pengaruh: <strong style={{ color: "#0C447C" }}>{f.pengaruh}%</strong>
+                  Nilai: <strong style={{ color: "#0C447C" }}>{f.nilai_pasien}</strong> · Influence: <strong style={{ color: "#0C447C" }}>{f.pengaruh}%</strong>
                 </span>
               </div>
               <div style={{ height: 6, background: "#E6F1FB", borderRadius: 3, overflow: "hidden" }}>
@@ -280,9 +280,9 @@ export default function App() {
       });
       const data = await res.json();
       if (data.success) setHasil(data);
-      else setError(data.error || "Terjadi kesalahan.");
+      else setError(data.error || "Something's wrong.");
     } catch {
-      setError("Tidak bisa terhubung ke backend. Pastikan app.py sedang berjalan.");
+      setError("Can't connect to backend. Makesure app.py is running.");
     }
     setLoading(false);
   };
@@ -303,7 +303,7 @@ export default function App() {
       <div style={s.main}>
         <div>
           <div style={s.card}>
-            <div style={s.cardTitle}>Data klinis pasien</div>
+            <div style={s.cardTitle}>Patient Clinical Data  </div>
             {Object.entries(FITUR_TOMBOL).map(([key, cfg]) => (
               <TombolField key={key} name={key} cfg={cfg} value={fitur[key]} onChange={handleChange} />
             ))}
@@ -316,7 +316,7 @@ export default function App() {
               disabled={loading}
               style={{ ...s.btnAnalyze, ...(loading ? s.btnDisabled : {}) }}
             >
-              {loading ? "Menganalisis..." : "Analisis Sekarang"}
+              {loading ? "Analyzing..." : "Analyze Now"}
             </button>
             {error && <div style={s.errorBox}>Error {error}</div>}
           </div>
@@ -324,15 +324,15 @@ export default function App() {
           <div style={s.statRow}>
             <div style={s.statCard}>
               <div style={s.statNum}>1,000</div>
-              <div style={s.statLbl}>Total data</div>
+              <div style={s.statLbl}>Total Data</div>
             </div>
             <div style={s.statCard}>
               <div style={s.statNum}>5</div>
-              <div style={s.statLbl}>Penyakit</div>
+              <div style={s.statLbl}>Diseases</div>
             </div>
             <div style={s.statCard}>
               <div style={s.statNum}>94%</div>
-              <div style={s.statLbl}>Akurasi model</div>
+              <div style={s.statLbl}>Model Accuracy</div>
             </div>
           </div>
         </div>
@@ -340,15 +340,15 @@ export default function App() {
         <div>
           {!hasil && !loading && (
             <div style={s.emptyBox}>
-              <p style={{ fontWeight: 600, fontSize: 14, margin: "0 0 6px", color: "#0C447C" }}>Belum ada analisis</p>
+              <p style={{ fontWeight: 600, fontSize: 14, margin: "0 0 6px", color: "#0C447C" }}>No analysis yet</p>
               <p style={{ fontSize: 13, margin: 0, lineHeight: 1.6 }}>
-                Isi data klinis pasien di sebelah kiri,<br />lalu klik <strong>Analisis Sekarang</strong>.
+                Fill in the patient clinical data on the left,<br />then click <strong>Analyze Now</strong>.
               </p>
             </div>
           )}
           {loading && (
             <div style={{ ...s.emptyBox, color: "#0C447C" }}>
-              <p style={{ margin: 0, fontSize: 14 }}>Sedang menganalisis data...</p>
+              <p style={{ margin: 0, fontSize: 14 }}>Analyzing data...</p>
             </div>
           )}
           {hasil && <HasilPanel hasil={hasil} />}

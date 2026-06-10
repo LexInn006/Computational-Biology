@@ -18,11 +18,11 @@ INHERITANCE = meta["inheritance"]
 FEATURE_NAMES = meta["feature_names"]
 
 PENJELASAN = {
-    0: "Model mendeteksi pola Thalassemia berdasarkan kadar hemoglobin yang rendah dan fetal hemoglobin yang tinggi, yang merupakan respons kompensasi tubuh terhadap kerusakan sel darah merah.",
-    1: "Model mendeteksi pola Hemophilia berdasarkan profil darah yang menunjukkan gangguan pembekuan, dikombinasikan dengan faktor genetik X-linked.",
-    2: "Model mendeteksi pola Breast Cancer berdasarkan ekspresi BRCA1 yang abnormal dan adanya mutasi p53, yang merupakan indikator utama risiko kanker payudara herediter.",
-    3: "Model mendeteksi pola Sickle Cell Anemia berdasarkan persentase sel darah merah berbentuk sabit (Sickled RBC) yang tinggi dan kadar hemoglobin yang rendah.",
-    4: "Model mendeteksi pola Cystic Fibrosis berdasarkan kadar Sweat Chloride yang tinggi, yang merupakan penanda utama diagnosis CF secara klinis.",
+    0: "The model detected a Thalassemia pattern based on low hemoglobin levels and high fetal hemoglobin, which is the body's compensatory response to red blood cell damage.",
+    1: "The model detected a Hemophilia pattern based on a blood profile indicating coagulation disorders, combined with X-linked genetic factors.",
+    2: "The model detected a Breast Cancer pattern based on abnormal BRCA1 expression and the presence of p53 mutation, which are the main indicators of hereditary breast cancer risk.",
+    3: "The model detected a Sickle Cell Anemia pattern based on a high percentage of sickle-shaped red blood cells (Sickled RBC) and low hemoglobin levels.",
+    4: "The model detected a Cystic Fibrosis pattern based on high Sweat Chloride levels, which is the primary clinical diagnostic marker for CF.",
 }
 
 def get_status(confidence):
